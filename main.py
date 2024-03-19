@@ -6,7 +6,7 @@ video_capture = cv2.VideoCapture(0)  # Change to your video source (0 for webcam
 
 # Define the codec and create VideoWriter object
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
-out = cv2.VideoWriter('output.avi', fourcc, 20.0, (640, 480))  # Adjust resolution if needed
+out = cv2.VideoWriter('output.avi', fourcc, 20.0, (1280, 720))  # Adjust resolution if needed
 
 # Read first frame and convert to grayscale
 ret, prev_frame = video_capture.read()

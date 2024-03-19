@@ -107,6 +107,6 @@ button.pack(pady=40
                 )
 
 
-# window.resizable(False, False)
-# window.attributes('-fullscreen', True)
+window.resizable(False, False)
+window.attributes('-fullscreen', True)
 window.mainloop()
