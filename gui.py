@@ -9,7 +9,7 @@ ctk.set_appearance_mode("light")
 
 window = tk.Tk()
 
-window.geometry("1920x1080")
+window.geometry("1280x720")
 
 frame_info = ttk.Frame(window, 
                        width=1920, 
