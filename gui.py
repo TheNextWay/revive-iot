@@ -103,8 +103,15 @@ def button_event():
     print("button pressed")
 
 button = ctk.CTkButton(frame_action,hover=True,hover_color="white", text="", image=button_image_1, command=button_event, fg_color='transparent', )
-button.pack(pady=40
-                )
+button.pack(pady=40)
+
+items_frame = ttk.Frame(window, borderwidth=5, relief="ridge", width=960, height=830)
+items_frame.pack()
+
+frame_item = ttk.Frame(items_frame, borderwidth=20, relief="ridge", width=535, height=155)
+frame_item.pack()
+
+# def item(item):
 
 
 window.resizable(False, False)
