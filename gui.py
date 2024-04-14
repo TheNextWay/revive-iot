@@ -1,5 +1,7 @@
 from pathlib import Path
 
+
+import asyncio
 import tkinter as tk
 from tkinter import LEFT, RIGHT, Button, PhotoImage, ttk
 import customtkinter as ctk
@@ -142,34 +144,65 @@ tsm={
 ctk.set_appearance_mode("light")
 
 pyglet.font.add_file('assets/PlusJakartaSans-SemiBold.ttf')
+pyglet.font.add_file('assets/PlusJakartaSans-Regular.ttf')
+
+class navbar(ttk.Frame):
+    def __init__(self, master=None, **kwargs):
+        super().__init__(master, **kwargs)
+        self.configure(width=1920, height=40)
+
+        self.wa_icon = ctk.CTkImage(light_image=Image.open("assets/frame0/whatsapp.png"),
+                                    dark_image=Image.open("assets/frame0/whatsapp-d.png"),
+                                    size=(25, 25))
+        self.temperature_icon = ctk.CTkImage(light_image=Image.open("assets/frame0/temperature.png"),
+                                              dark_image=Image.open("assets/frame0/temperature-d.png"),
+                                              size=(25, 25))
+        self.capacity_icon = ctk.CTkImage(light_image=Image.open("assets/frame0/database.png"),
+                                          dark_image=Image.open("assets/frame0/database-d.png"),
+                                          size=(25, 25))
+        self.logo_image = ctk.CTkImage(light_image=Image.open("assets/frame0/logo.png"),
+                                       dark_image=Image.open("assets/frame0/logo-d.png"),
+                                       size=(254, 61))
+
+        self.font_info = ctk.CTkFont(family="Plus Jakarta Sans Semibold",
+                                      size=20,
+                                      weight='bold')
+
+        ctk.CTkLabel(self, image=self.wa_icon, compound=tk.LEFT, padx=10, text="CS 082245676151",
+                     text_color=("#0B7156", 'white'), font=self.font_info).pack(side='right')
+
+        ctk.CTkLabel(self, image=self.temperature_icon, padx=10, compound=tk.LEFT, text="40°C",
+                     text_color=("#0B7156", 'white'), font=self.font_info).pack(side='right')
+
+        ctk.CTkLabel(self, image=self.capacity_icon, compound=tk.LEFT, padx=10, text="51/150",
+                     text_color=("#0B7156", 'white'), font=self.font_info).pack(side='right')
+
+        ctk.CTkLabel(self, compound=tk.LEFT, image=self.logo_image, text="").pack(side="left")
+
+
 window = tk.Tk()
 
 window.geometry("1280x720")
 
-frame_info = ttk.Frame(window, 
-                       width=1920, 
-                       height=40)
-frame_info.pack(pady=40,
-                padx=80,
-                fill="both",
-                side="top")
+def show_frame(frame):
+    frame.tkraise()
+    
+window.state('zoomed')
 
+window.rowconfigure(0, weight=1)
+window.columnconfigure(0, weight=1)
 
-wa_icon = ctk.CTkImage(light_image=Image.open("assets/frame0/whatsapp.png"),
-                        dark_image=Image.open("assets/frame0/whatsapp-d.png"),
-                        size=(25, 25))
+frame1 = tk.Frame(window)
+frame2 = tk.Frame(window)
+frame3 = tk.Frame(window)
+
+for frame in (frame1, frame2, frame3):
+    frame.grid(row=0,column=0,sticky='nsew')
 
 logo_image = ctk.CTkImage(light_image=Image.open("assets/frame0/logo.png"),
                         dark_image=Image.open("assets/frame0/logo-d.png"),
                         size=(254, 61))
 
-temperature_icon = ctk.CTkImage(light_image=Image.open("assets/frame0/temperature.png"),
-                                dark_image=Image.open("assets/frame0/temperature-d.png"),
-                                size=(25, 25))
-
-capacity_icon = ctk.CTkImage(light_image=Image.open("assets/frame0/database.png"),
-                            dark_image=Image.open("assets/frame0/database-d.png"),
-                            size=(25, 25))
 
 shirt = ctk.CTkImage(Image.open("assets/frame0/shirt.png"),
                         size=(75, 75))
@@ -190,43 +223,17 @@ font_info = ctk.CTkFont(family="Plus Jakarta Sans Semibold",
 
 
 
-ctk.CTkLabel(
-    frame_info, 
-    image=wa_icon, 
-    compound=LEFT, 
-    padx=10,  
-    text="CS 082245676151", 
-    text_color=("#0B7156",'white'), 
-    font=font_info).pack(side = 'right' )
-
-ctk.CTkLabel(
-    frame_info, 
-    image=temperature_icon, 
-    padx=10 ,compound=LEFT, 
-    text="40o", 
-    text_color=("#0B7156",'white'), 
-    font=font_info).pack(side = 'right')
-
-ctk.CTkLabel(
-    frame_info, 
-    image=capacity_icon, 
-    compound=LEFT, 
-    padx=10, 
-    text="51/150", 
-    text_color=("#0B7156",'white'), 
-    font=font_info).pack(side = 'right' )
-
-ctk.CTkLabel(
-    frame_info,
-    compound=LEFT, 
-    image=logo_image, 
-    text="" ).pack(side="left")
-
-
 textile = ctk.CTkImage(Image.open("assets/frame0/textiles.png"),
                                   size=(564, 232.73))
 
-frame_action = ttk.Frame(window, 
+
+#==================================== Frame 1 Code ==========================
+navbar_frame_1 = navbar(frame1)
+navbar_frame_1.pack(pady=40, padx=80, fill="both", side="top")
+
+
+
+frame_action = ttk.Frame(frame1, 
                        width=960, 
                        height=900)
 
@@ -235,21 +242,19 @@ frame_action.pack(padx=50, side="left")
 ctk.CTkLabel(frame_action, image=textile, text="").pack()
 
 def button_event():
-    print("button pressed")
+    show_frame(frame2)
+    frame2.after(3000, lambda: show_frame(frame3))  # Menjadwalkan beralih ke frame3 setelah 5 detik
 
 
-ctk.CTkButton(frame_action, corner_radius=20,command=button_event(), text="Selesai Menyetor", font=('Plus Jakarta Sans Semibold',48), fg_color="#1BAE80",hover_color="#0B7156",  text_color="#F6FAF7", height=115, width=740).pack(pady=80)
+ctk.CTkButton(frame_action, corner_radius=20,command=lambda:button_event(), text="Selesai Menyetor", font=('Plus Jakarta Sans Semibold',48), fg_color="#1BAE80",hover_color="#0B7156",  text_color="#F6FAF7", height=115, width=740).pack(pady=80)
         
 
-items_frame = ttk.Frame(window, borderwidth=5,width=960, height=830)
+items_frame = ttk.Frame(frame1, borderwidth=5,width=960, height=830)
 items_frame.pack(anchor="center")
 
 
 text_item = ctk.CTkFont(family="Plus Jakarta Sans Semibold", 
                         size=64)  
-
-
-
 
 def item_component(item):
     frame_item = ttk.Frame(items_frame, borderwidth=10,  width=535, height=155)
@@ -258,25 +263,22 @@ def item_component(item):
     match item["clothing_type"]:
         case "Kaos":
             ctk.CTkLabel(frame_item, image=shirt, text="").pack(side="left", anchor="nw", pady=25)
-            ctk.CTkLabel(frame_items,text_color="#2D3648", font=('Plus Jakarta Sans Semibold',64), text=(1,"x", item["clothing_type"])).pack(anchor="nw")
 
             
         case "Celana":
             ctk.CTkLabel(frame_item, image=pants, text="").pack(side="left", anchor="nw", pady=25)
-            ctk.CTkLabel(frame_items,text_color="#2D3648", font=('Plus Jakarta Sans Semibold',64), text=(1,"x", item["clothing_type"])).pack(anchor="nw")
 
             
         case "Jaket":
             ctk.CTkLabel(frame_item, image=jacket, text="").pack(side="left", anchor="nw", pady=25)
-            ctk.CTkLabel(frame_items,text_color="#2D3648", font=('Plus Jakarta Sans Semibold',64), text=(1,"x", item["clothing_type"])).pack(anchor="nw")
 
 
         case "Kain":
             ctk.CTkLabel(frame_item, image=fabric, text="").pack(side="left", anchor="nw", pady=25)
-            ctk.CTkLabel(frame_items,text_color="#2D3648", font=('Plus Jakarta Sans Semibold',64), text=(1,"x", item["clothing_type"])).pack(anchor="nw")
 
 
     
+    ctk.CTkLabel(frame_items,text_color="#2D3648", font=('Plus Jakarta Sans Semibold',64), text=(1,"x", item["clothing_type"])).pack(anchor="nw")
     
     frame_fabric_type = ttk.Frame(frame_items, width=535, height=155)
 
@@ -288,12 +290,67 @@ def item_component(item):
     frame_item.pack(anchor="nw")
     frame_items.pack(anchor="nw", padx=20)
 
-
-
 for item in items.items():
   item_component(item[1])
+
+#================================ Frame 2 code==========================================
+success = ctk.CTkImage(Image.open("assets/frame1/success.png"),
+                        size=(404, 404))
+
+frame2.configure(background="#0B7156")
+ctk.CTkLabel(frame2, image=success, compound="top",text_color="white" , text='Yeay, Berhasil', font=('Plus Jakarta Sans Semibold',64), ).pack(expand=True)
+
+#================================= Frame 3 code==========================================
+navbar_frame_3 = navbar(frame3)
+navbar_frame_3.pack(pady=40, padx=80, fill="both", side="top")
+
+# import the time module 
+import time 
   
+
+
+# input time in seconds 
+  
+# function call 
+  
+# function call 
+frame3_left = ttk.Frame(frame3, width=960, height=830)
+def countdown(t): 
+    while t: 
+        mins, secs = divmod(t, 60) 
+        timer = '{:02d}:{:02d}'.format(mins, secs) 
+        ctk.CTkLabel(frame3_left, text_color="#2D3648" , text=(timer), font=('Plus Jakarta Sans Semibold',32), ).pack(anchor="w",pady=30)
+        time.sleep(1) 
+        t -= 1
+      
+t = 3000
+  
+countdown(t)  
+
+
+ctk.CTkLabel(frame3_left, text_color="#2D3648" , text='321', font=('Plus Jakarta Sans Semibold',145), ).pack(anchor="w", )
+ctk.CTkLabel(frame3_left, text_color="#2D3648" , text='Revive Poin', font=('Plus Jakarta Sans',128) ).pack()
+
+frame3_left.pack(anchor="w", padx=100, pady=80, side="left",)
+
+frame3_right = ttk.Frame(frame3, width=960, height=830)
+qr = ctk.CTkImage(Image.open("assets/frame3/qr.png"),
+                        size=(600, 600))
+
+ctk.CTkLabel(frame3_right, text_color="#2D3648" , text='Pindai dengan aplikasi Revive', font=('Plus Jakarta Sans Semibold',32), ).pack()
+ctk.CTkLabel(frame3_right, image=qr,text='').pack()
+
+
+frame3_right.pack(anchor="e", side="right", padx=50)
+
+
+
+# frame3_btn = tk.Button(frame3, text='Enter',command=lambda:show_frame(frame1))
+# frame3_btn.pack(fill='x', ipady=15)
+
+show_frame(frame1)  
 
 window.resizable(False, False)
 window.attributes('-fullscreen', True)
 window.mainloop()
+
