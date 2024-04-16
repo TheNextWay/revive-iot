@@ -1,12 +1,17 @@
 from pathlib import Path
-
-
 import asyncio
+import random
+import string
+import pyqrcode
 import tkinter as tk
-from tkinter import LEFT, RIGHT, Button, PhotoImage, ttk
+from tkinter import  ttk
 import customtkinter as ctk
 from PIL import Image
+from PIL import ImageTk
 import pyglet
+import qrcode
+
+
 items = {
     1 : {
         "id":1,
@@ -131,10 +136,9 @@ items = {
     },
 }
 
-
 tsm={
    "coordinate": "-7.938878, 112.579912",
-   "status": "ON",
+   "status": "normal",
    "ip_address": "108.122.028",
    "temperature": "35",
    "capacity": "50",
@@ -145,6 +149,14 @@ ctk.set_appearance_mode("light")
 
 pyglet.font.add_file('assets/PlusJakartaSans-SemiBold.ttf')
 pyglet.font.add_file('assets/PlusJakartaSans-Regular.ttf')
+
+
+def create_qrcode():
+    get_code = pyqrcode.create()
+    
+
+def clear_all():
+    pass
 
 class navbar(ttk.Frame):
     def __init__(self, master=None, **kwargs):
@@ -168,16 +180,82 @@ class navbar(ttk.Frame):
                                       size=20,
                                       weight='bold')
 
-        ctk.CTkLabel(self, image=self.wa_icon, compound=tk.LEFT, padx=10, text="CS 082245676151",
+        ctk.CTkLabel(self, image=self.wa_icon, compound=tk.LEFT, padx=10, text=("CS",tsm["cs_contact"]),
                      text_color=("#0B7156", 'white'), font=self.font_info).pack(side='right')
 
-        ctk.CTkLabel(self, image=self.temperature_icon, padx=10, compound=tk.LEFT, text="40°C",
+        ctk.CTkLabel(self, image=self.temperature_icon, padx=10, compound=tk.LEFT, text=(tsm["temperature"],"°C"),
                      text_color=("#0B7156", 'white'), font=self.font_info).pack(side='right')
 
-        ctk.CTkLabel(self, image=self.capacity_icon, compound=tk.LEFT, padx=10, text="51/150",
+        ctk.CTkLabel(self, image=self.capacity_icon, compound=tk.LEFT, padx=10, text=(tsm["capacity"],"/",tsm["max_capacity"]),
                      text_color=("#0B7156", 'white'), font=self.font_info).pack(side='right')
 
         ctk.CTkLabel(self, compound=tk.LEFT, image=self.logo_image, text="").pack(side="left")
+
+class navbar_green(ttk.Frame):
+    def __init__(self, master=None, **kwargs):
+        super().__init__(master, **kwargs)
+        self.style = ttk.Style()
+        self.style.configure('NavbarGreen.TFrame', background='#0B7156')  # Atur latar belakang melalui konfigurasi gaya
+        self.configure(style='NavbarGreen.TFrame')  # Gunakan gaya yang telah dikonfigurasi
+
+
+        self.wa_icon = ctk.CTkImage(Image.open("assets/frame0/whatsapp-d.png"),
+                                    size=(25, 25))
+        self.temperature_icon = ctk.CTkImage(Image.open("assets/frame0/temperature-d.png"),
+                                              size=(25, 25))
+        self.capacity_icon = ctk.CTkImage(Image.open("assets/frame0/database-d.png"),
+                                          size=(25, 25))
+        self.logo_image = ctk.CTkImage(Image.open("assets/frame0/logo-d.png"),
+                                       size=(254, 61))
+
+        self.font_info = ctk.CTkFont(family="Plus Jakarta Sans Semibold",
+                                      size=20,
+                                      weight='bold')
+
+        ctk.CTkLabel(self, bg_color="#0B7156", image=self.wa_icon, compound=tk.LEFT, padx=10, text=("CS",tsm["cs_contact"]),
+                     text_color=('white'), font=self.font_info).pack(side='right')
+
+        ctk.CTkLabel(self,bg_color="#0B7156", image=self.temperature_icon, padx=10, compound=tk.LEFT,text=(tsm["temperature"],"°C"),
+                     text_color=('white'), font=self.font_info).pack(side='right')
+
+        ctk.CTkLabel(self, bg_color="#0B7156",  image=self.capacity_icon, compound=tk.LEFT, padx=10,text=(tsm["capacity"],"/",tsm["max_capacity"]),
+                     text_color=('white'), font=self.font_info).pack(side='right')
+
+        ctk.CTkLabel(self,bg_color="#0B7156",  compound=tk.LEFT, image=self.logo_image, text="").pack(side="left")
+
+class navbar_red(ttk.Frame):
+    def __init__(self, master=None, **kwargs):
+        super().__init__(master, **kwargs)
+        self.style = ttk.Style()
+        self.style.configure('NavbarRed.TFrame', background='#FF263E')  # Atur latar belakang melalui konfigurasi gaya
+        self.configure(style='NavbarRed.TFrame')  # Gunakan gaya yang telah dikonfigurasi
+
+
+        self.wa_icon = ctk.CTkImage(Image.open("assets/frame0/whatsapp-d.png"),
+                                    size=(25, 25))
+        self.temperature_icon = ctk.CTkImage(Image.open("assets/frame0/temperature-d.png"),
+                                              size=(25, 25))
+        self.capacity_icon = ctk.CTkImage(Image.open("assets/frame0/database-d.png"),
+                                          size=(25, 25))
+        self.logo_image = ctk.CTkImage(Image.open("assets/frame0/logo-d.png"),
+                                       size=(254, 61))
+
+        self.font_info = ctk.CTkFont(family="Plus Jakarta Sans Semibold",
+                                      size=20,
+                                      weight='bold')
+
+        ctk.CTkLabel(self, bg_color="#FF263E", image=self.wa_icon, compound=tk.LEFT, padx=10, text=("CS",tsm["cs_contact"]),
+                     text_color=('white'), font=self.font_info).pack(side='right')
+
+        ctk.CTkLabel(self,bg_color="#FF263E", image=self.temperature_icon, padx=10, compound=tk.LEFT,text=(tsm["temperature"],"°C"),
+                     text_color=('white'), font=self.font_info).pack(side='right')
+
+        ctk.CTkLabel(self, bg_color="#FF263E",  image=self.capacity_icon, compound=tk.LEFT, padx=10,text=(tsm["capacity"],"/",tsm["max_capacity"]),
+                     text_color=('white'), font=self.font_info).pack(side='right')
+
+        ctk.CTkLabel(self,bg_color="#FF263E",  compound=tk.LEFT, image=self.logo_image, text="").pack(side="left")
+
+
 
 
 window = tk.Tk()
@@ -192,11 +270,13 @@ window.state('zoomed')
 window.rowconfigure(0, weight=1)
 window.columnconfigure(0, weight=1)
 
+frame_maintain = tk.Frame(window)
 frame1 = tk.Frame(window)
 frame2 = tk.Frame(window)
 frame3 = tk.Frame(window)
+frame4 = tk.Frame(window)
 
-for frame in (frame1, frame2, frame3):
+for frame in (frame1, frame2, frame3,frame4, frame_maintain):
     frame.grid(row=0,column=0,sticky='nsew')
 
 logo_image = ctk.CTkImage(light_image=Image.open("assets/frame0/logo.png"),
@@ -294,38 +374,47 @@ for item in items.items():
   item_component(item[1])
 
 #================================ Frame 2 code==========================================
-success = ctk.CTkImage(Image.open("assets/frame1/success.png"),
+success_icon = ctk.CTkImage(Image.open("assets/frame1/success.png"),
                         size=(404, 404))
 
+navbar_frame_2 = navbar_green(frame2)
+navbar_frame_2.pack(pady=40, padx=80, fill="both", side="top")
+
+
 frame2.configure(background="#0B7156")
-ctk.CTkLabel(frame2, image=success, compound="top",text_color="white" , text='Yeay, Berhasil', font=('Plus Jakarta Sans Semibold',64), ).pack(expand=True)
+ctk.CTkLabel(frame2, image=success_icon, compound="top",text_color="white" , text="Yeayy, Berhasill", font=('Plus Jakarta Sans Semibold',64), ).pack(fill="y")
+ctk.CTkLabel(frame2, compound="top",text_color="white" , text='Pakaianmu Sudah kami terima semua!', font=('Plus Jakarta Sans Semibold',50), ).pack()
 
 #================================= Frame 3 code==========================================
 navbar_frame_3 = navbar(frame3)
 navbar_frame_3.pack(pady=40, padx=80, fill="both", side="top")
 
-# import the time module 
-import time 
-  
-
-
-# input time in seconds 
-  
-# function call 
-  
-# function call 
 frame3_left = ttk.Frame(frame3, width=960, height=830)
-def countdown(t): 
-    while t: 
-        mins, secs = divmod(t, 60) 
-        timer = '{:02d}:{:02d}'.format(mins, secs) 
-        ctk.CTkLabel(frame3_left, text_color="#2D3648" , text=(timer), font=('Plus Jakarta Sans Semibold',32), ).pack(anchor="w",pady=30)
-        time.sleep(1) 
-        t -= 1
+# def countdown(t): 
+#     while t: 
+#         mins, secs = divmod(t, 60) 
+#         timer = '{:02d}:{:02d}'.format(mins, secs) 
+#         ctk.CTkLabel(frame3_left, text_color="#2D3648" , text=(timer), font=('Plus Jakarta Sans Semibold',32), ).pack(anchor="w",pady=30)
+#         time.sleep(1) 
+#         t -= 1
       
-t = 3000
+# t = 3000
   
-countdown(t)  
+# countdown(t)  
+
+
+# qr generation
+def create_qrcode(text):
+    qr = qrcode.QRCode(border=2)
+    qr.add_data(text)
+    qr.make(fit=True)
+    img = qr.make_image(back_color="#f0f0f0")
+    return img
+
+# rand string genereation
+letters = string.ascii_letters
+rand_string = ''.join(random.choice(letters) for i in range(10))
+imgs = create_qrcode(rand_string).resize((550, 550))
 
 
 ctk.CTkLabel(frame3_left, text_color="#2D3648" , text='321', font=('Plus Jakarta Sans Semibold',145), ).pack(anchor="w", )
@@ -334,8 +423,7 @@ ctk.CTkLabel(frame3_left, text_color="#2D3648" , text='Revive Poin', font=('Plus
 frame3_left.pack(anchor="w", padx=100, pady=80, side="left",)
 
 frame3_right = ttk.Frame(frame3, width=960, height=830)
-qr = ctk.CTkImage(Image.open("assets/frame3/qr.png"),
-                        size=(600, 600))
+qr = ImageTk.PhotoImage(imgs)
 
 ctk.CTkLabel(frame3_right, text_color="#2D3648" , text='Pindai dengan aplikasi Revive', font=('Plus Jakarta Sans Semibold',32), ).pack()
 ctk.CTkLabel(frame3_right, image=qr,text='').pack()
@@ -344,11 +432,48 @@ ctk.CTkLabel(frame3_right, image=qr,text='').pack()
 frame3_right.pack(anchor="e", side="right", padx=50)
 
 
+frame3_btn = tk.Button(frame3_right, text='Enter',command=lambda:success_scan())
+frame3_btn.pack(fill='x', ipady=15)
 
-# frame3_btn = tk.Button(frame3, text='Enter',command=lambda:show_frame(frame1))
-# frame3_btn.pack(fill='x', ipady=15)
+def success_scan():
+    show_frame(frame4)
+    frame4.after(3000, lambda: show_frame(frame1))  # Menjadwalkan beralih ke frame3 setelah 5 detik
 
-show_frame(frame1)  
+# ======================= frame4 ===============
+navbar_frame_4 = navbar_green(frame4)
+navbar_frame_4.pack(pady=40, padx=80, fill="both", side="top")
+hi_icon = ctk.CTkImage(Image.open("assets/frame4/hi.png"),
+                        size=(404, 404))
+
+frame4.configure(background="#0B7156")
+ctk.CTkLabel(frame4, image=hi_icon, compound="top",text_color="white" , text=('Hi,',' Arsyad Ali Mahardika'), font=('Plus Jakarta Sans',64), ).pack(fill="y")
+ctk.CTkLabel(frame4, compound="top",text_color="white" , text='Poinmu Berhasil ditambahkan', font=('Plus Jakarta Sans Semibold',64), ).pack()
+
+
+# ============= frame_maintain ===================
+
+
+navbar_frame_maintain = navbar_red(frame_maintain)
+navbar_frame_maintain.pack(pady=40, padx=80, fill="both", side="top")
+
+engineering = ctk.CTkImage(Image.open("assets/frame_maintain/engineering.png"),
+                        size=(825, 500))
+
+frame_maintain.configure(background="#FF263E")
+ctk.CTkLabel(frame_maintain, image=engineering, compound="top",text_color="white" , text='' ).pack(expand=True)
+
+
+
+
+# ================ End Code =============
+
+
+if tsm["status"] == "maintain":
+    show_frame(frame_maintain)
+else:
+    show_frame(frame1)  
+
+
 
 window.resizable(False, False)
 window.attributes('-fullscreen', True)
