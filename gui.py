@@ -2,9 +2,9 @@ from pathlib import Path
 import asyncio
 import random
 import string
-import pyqrcode
+from .IoT import maketoken
 import tkinter as tk
-from tkinter import  ttk
+from tkinter import ttk
 import customtkinter as ctk
 from PIL import Image
 from PIL import ImageTk
@@ -149,11 +149,6 @@ ctk.set_appearance_mode("light")
 
 pyglet.font.add_file('assets/PlusJakartaSans-SemiBold.ttf')
 pyglet.font.add_file('assets/PlusJakartaSans-Regular.ttf')
-
-
-def create_qrcode():
-    get_code = pyqrcode.create()
-    
 
 def clear_all():
     pass
@@ -411,11 +406,9 @@ def create_qrcode(text):
     img = qr.make_image(back_color="#f0f0f0")
     return img
 
-# rand string genereation
 letters = string.ascii_letters
 rand_string = ''.join(random.choice(letters) for i in range(10))
-imgs = create_qrcode(rand_string).resize((550, 550))
-
+imgs = create_qrcode(maketoken(321,rand_string)).resize((550, 550))
 
 ctk.CTkLabel(frame3_left, text_color="#2D3648" , text='321', font=('Plus Jakarta Sans Semibold',145), ).pack(anchor="w", )
 ctk.CTkLabel(frame3_left, text_color="#2D3648" , text='Revive Poin', font=('Plus Jakarta Sans',128) ).pack()
