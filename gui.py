@@ -408,7 +408,8 @@ def create_qrcode(text):
 
 letters = string.ascii_letters
 rand_string = ''.join(random.choice(letters) for i in range(10))
-imgs = create_qrcode(maketoken(321,rand_string)).resize((550, 550))
+# imgs = create_qrcode(maketoken(321,rand_string)).resize((550, 550))
+imgs = create_qrcode(rand_string).resize((550, 550))
 
 ctk.CTkLabel(frame3_left, text_color="#2D3648" , text='321', font=('Plus Jakarta Sans Semibold',145), ).pack(anchor="w", )
 ctk.CTkLabel(frame3_left, text_color="#2D3648" , text='Revive Poin', font=('Plus Jakarta Sans',128) ).pack()
