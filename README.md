@@ -8,6 +8,7 @@ Revive adalah inisiatif yang bertujuan untuk menanggapi tantangan pengelolaan li
 - [Mobile Platform](https://github.com/TheNextWay/revive-frontend)
 - [Back End](https://github.com/TheNextWay/revive-backend)
 
+
 ## TEAM
 ### TheNextWay
 | #   | Name                                                                           | Role           |
@@ -15,4 +16,7 @@ Revive adalah inisiatif yang bertujuan untuk menanggapi tantangan pengelolaan li
 | 1   |[Fathimah Aqilah Zarrah](https://www.linkedin.com/in/fathimah-aqilah-881ab5236) | Hustler        |
 | 2   |[Arsyad Ali Mahardika](https://www.linkedin.com/in/arsyadam)                    | Hipster        |
 | 3   |[Muhammad Zuhair Zuhdi](https://frostfire.id)                                   | Hacker         |
+
+## Video
+- [Video Tentang Revive](https://drive.google.com/file/d/1g0M8qdL2Co5xbhEUUY0ukvoabouGXHEt/view?)
 
